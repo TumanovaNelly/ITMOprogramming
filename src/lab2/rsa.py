@@ -1,3 +1,4 @@
+from math import floor
 import random
 import typing as tp
 
@@ -12,8 +13,10 @@ def is_prime(n: int) -> bool:
     >>> is_prime(8)
     False
     """
-    # PUT YOUR CODE HERE
-    pass
+    for div in range(2, floor(n ** 0.5) + 1):
+        if n % div == 0:
+            return False
+    return True
 
 
 def gcd(a: int, b: int) -> int:
@@ -24,8 +27,10 @@ def gcd(a: int, b: int) -> int:
     >>> gcd(3, 7)
     1
     """
-    # PUT YOUR CODE HERE
-    pass
+    if a == 0:
+        return b
+
+    return gcd(b % a, a)
 
 
 def multiplicative_inverse(e: int, phi: int) -> int:
