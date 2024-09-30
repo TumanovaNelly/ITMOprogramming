@@ -1,48 +1,61 @@
 from math import floor
+from operator import is_
 import random
 import typing as tp
 
-
+"""
+Tests to see if a number is prime.
+>>> is_prime(2)
+True
+>>> is_prime(11)
+True
+>>> is_prime(8)
+False
+"""
 def is_prime(n: int) -> bool:
-    """
-    Tests to see if a number is prime.
-    >>> is_prime(2)
-    True
-    >>> is_prime(11)
-    True
-    >>> is_prime(8)
-    False
-    """
+    if not (n > 0):
+        raise ValueError("Number must be natural")
     for div in range(2, floor(n ** 0.5) + 1):
         if n % div == 0:
             return False
     return True
 
-
+"""
+Euclid's algorithm for determining the greatest common divisor.
+>>> gcd(12, 15)
+3
+>>> gcd(3, 7)
+1
+"""
 def gcd(a: int, b: int) -> int:
-    """
-    Euclid's algorithm for determining the greatest common divisor.
-    >>> gcd(12, 15)
-    3
-    >>> gcd(3, 7)
-    1
-    """
-    if a == 0:
-        return b
+    while a > 0:
+        a, b = b % a, a
+    return b
 
-    return gcd(b % a, a)
-
-
+"""
+Euclid's extended algorithm for finding the multiplicative
+inverse of two numbers.
+>>> multiplicative_inverse(7, 40)
+23
+"""
 def multiplicative_inverse(e: int, phi: int) -> int:
-    """
-    Euclid's extended algorithm for finding the multiplicative
-    inverse of two numbers.
-    >>> multiplicative_inverse(7, 40)
-    23
-    """
-    # PUT YOUR CODE HERE
-    pass
+    if e < 0 or phi < 0:
+        raise ValueError("Both numbers must be positive")
+    phi_ = phi
+    x0, x1 = 1, 0
+    y0, y1 = 0, 1
 
+    while e > 0:
+        q = phi_ // e 
+        phi_, e = e, phi_ % e  
+        x0, x1 = x1, x0 - q * x1
+        y0, y1 = y1, y0 - q * y1
+    
+    if phi_ != 1:
+        raise ValueError("e and phi aren't coprime")
+    return y0 + (phi if y0 < 0 else 0)
+
+print(multiplicative_inverse(95, 391))
 
 def generate_keypair(p: int, q: int) -> tp.Tuple[tp.Tuple[int, int], tp.Tuple[int, int]]:
     if not (is_prime(p) and is_prime(q)):
@@ -50,26 +63,17 @@ def generate_keypair(p: int, q: int) -> tp.Tuple[tp.Tuple[int, int], tp.Tuple[in
     elif p == q:
         raise ValueError("p and q cannot be equal")
 
-    # n = pq
-    # PUT YOUR CODE HERE
-
-    # phi = (p-1)(q-1)
-    # PUT YOUR CODE HERE
+    n = p * q
+    phi = (p - 1) * (q - 1)
 
     # Choose an integer e such that e and phi(n) are coprime
     e = random.randrange(1, phi)
-
-    # Use Euclid's Algorithm to verify that e and phi(n) are coprime
-    g = gcd(e, phi)
-    while g != 1:
+    while gcd(e, phi) != 1:
         e = random.randrange(1, phi)
-        g = gcd(e, phi)
 
     # Use Extended Euclid's Algorithm to generate the private key
     d = multiplicative_inverse(e, phi)
-
     # Return public and private keypair
-    # Public key is (e, n) and private key is (d, n)
     return ((e, n), (d, n))
 
 
