@@ -1,5 +1,4 @@
 from math import floor
-from operator import is_
 import random
 import typing as tp
 
@@ -60,6 +59,8 @@ print(multiplicative_inverse(95, 391))
 def generate_keypair(p: int, q: int) -> tp.Tuple[tp.Tuple[int, int], tp.Tuple[int, int]]:
     if not (is_prime(p) and is_prime(q)):
         raise ValueError("Both numbers must be prime.")
+    if p < 17 or q < 17:
+        raise ValueError("Îne of the numbers is too small, choose numbers greater than 16")
     elif p == q:
         raise ValueError("p and q cannot be equal")
 
