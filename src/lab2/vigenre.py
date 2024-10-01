@@ -1,4 +1,17 @@
 NUM_LETTERS = ord('z') - ord('a') + 1
+
+def check_key(keyword: str) -> str:
+    if not keyword:
+        raise ValueError("Empty keyword")
+
+    correct_key = "".join(filter(str.isalpha, keyword))
+    if not correct_key:
+        raise ValueError("keyword must contain at least one letter")
+
+    if correct_key != keyword:
+        print(f"Keyword was modified to: {correct_key}")
+    return correct_key
+
 """
 Encrypts plaintext using a Vigenere cipher.
 >>> encrypt_vigenere("PYTHON", "A")
@@ -9,6 +22,7 @@ Encrypts plaintext using a Vigenere cipher.
 'LXFOPVEFRNHR'
 """
 def encrypt_vigenere(plaintext: str, keyword: str) -> str:
+    keyword = check_key(keyword)
     ciphertext = []
     for i in range(len(plaintext)):
         new_ord = ord(plaintext[i])
@@ -21,7 +35,7 @@ def encrypt_vigenere(plaintext: str, keyword: str) -> str:
 
     return "".join(ciphertext)
 
-print(encrypt_vigenere("PYTHON", "A"))
+print(encrypt_vigenere("PYTHON", "12aabb2"))
 print(encrypt_vigenere("python", "a"))
 print(encrypt_vigenere("ATTACKATDAWN", "LEMON"))
 
@@ -35,6 +49,7 @@ Decrypts a ciphertext using a Vigenere cipher.
 'ATTACKATDAWN'
 """
 def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
+    keyword = check_key(keyword)
     plaintext = []
     for i in range(len(ciphertext)):
         new_ord = ord(ciphertext[i])
