@@ -1,3 +1,4 @@
+NUM_LETTERS = ord('z') - ord('a') + 1
 """ Encrypts plaintext using a Caesar cipher.
 >>> encrypt_caesar("PYTHON")
 'SBWKRQ'
@@ -10,17 +11,20 @@
 """
 def encrypt_caesar(plaintext: str, shift: int = 3) -> str:
     ciphertext = []
-    num_letters = ord('z') - ord('a') + 1
     for sym in plaintext:
-        if sym >= 'a' and sym <= 'z':
-            new_ord = ord(sym) + shift
-            ciphertext.append(chr(new_ord - (num_letters if new_ord > ord('z') else 0)))
-        elif sym >= 'A' and sym <= 'Z':
-            new_ord = ord(sym) + shift
-            ciphertext.append(chr(new_ord - (num_letters if new_ord > ord('Z') else 0)))
-        else:
-            ciphertext.append(sym)
+        new_ord = ord(sym)
+        if 'a' <= sym <= 'z':
+            new_ord = ord('a') + (new_ord - ord('a') + shift) % NUM_LETTERS
+        elif 'A' <= sym <= 'Z':
+            new_ord = ord('A') + (new_ord - ord('A') + shift) % NUM_LETTERS
+        ciphertext.append(chr(new_ord))
+
     return "".join(ciphertext)
+
+print(encrypt_caesar("python"))
+print(encrypt_caesar("PYTHON"))
+print(encrypt_caesar("Python3.6"))
+print(encrypt_caesar(""))
 
 
 """ Decrypts a ciphertext using a Caesar cipher.
@@ -35,15 +39,15 @@ def encrypt_caesar(plaintext: str, shift: int = 3) -> str:
 """
 def decrypt_caesar(ciphertext: str, shift: int = 3) -> str:
     plaintext = []
-    NUM_LETTERS = ord('z') - ord('a') + 1
     for sym in ciphertext:
-        if sym >= 'a' and sym <= 'z':
-            new_ord = ord(sym) - shift
-            plaintext.append(chr(new_ord + (NUM_LETTERS if new_ord < ord('a') else 0)))
-        elif sym >= 'A' and sym <= 'Z':
-            new_ord = ord(sym) - shift
-            plaintext.append(chr(new_ord + (NUM_LETTERS if new_ord < ord('A') else 0)))
-        else:
-            plaintext.append(sym)
+        new_ord = ord(sym)
+        if 'a' <= sym <= 'z':
+            new_ord = ord('a') + (new_ord - ord('a') - shift) % NUM_LETTERS
+        elif 'A' <= sym <= 'Z':
+            new_ord = ord('A') + (new_ord - ord('A') - shift) % NUM_LETTERS
+        plaintext.append(chr(new_ord))
     return "".join(plaintext)
 
+print(decrypt_caesar("SBWKRQ"))
+print(decrypt_caesar("Sbwkrq3.6"))
+print(decrypt_caesar(""))
