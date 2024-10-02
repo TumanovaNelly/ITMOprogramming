@@ -21,11 +21,6 @@ def encrypt_caesar(plaintext: str, shift: int = 3) -> str:
 
     return "".join(ciphertext)
 
-print(encrypt_caesar("python"))
-print(encrypt_caesar("PYTHON"))
-print(encrypt_caesar("Python3.6"))
-print(encrypt_caesar(""))
-
 
 """ Decrypts a ciphertext using a Caesar cipher.
 >>> decrypt_caesar("SBWKRQ")
@@ -47,7 +42,3 @@ def decrypt_caesar(ciphertext: str, shift: int = 3) -> str:
             new_ord = ord('A') + (new_ord - ord('A') - shift) % NUM_LETTERS
         plaintext.append(chr(new_ord))
     return "".join(plaintext)
-
-print(decrypt_caesar("SBWKRQ"))
-print(decrypt_caesar("Sbwkrq3.6"))
-print(decrypt_caesar(""))

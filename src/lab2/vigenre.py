@@ -35,10 +35,6 @@ def encrypt_vigenere(plaintext: str, keyword: str) -> str:
 
     return "".join(ciphertext)
 
-print(encrypt_vigenere("PYTHON", "12aabb2"))
-print(encrypt_vigenere("python", "a"))
-print(encrypt_vigenere("ATTACKATDAWN", "LEMON"))
-
 """
 Decrypts a ciphertext using a Vigenere cipher.
 >>> decrypt_vigenere("PYTHON", "A")
@@ -60,7 +56,3 @@ def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
 
         plaintext.append(chr(new_ord))
     return "".join(plaintext)
-
-print(decrypt_vigenere("PYTHON", "A"))
-print(decrypt_vigenere("python", "a"))
-print(decrypt_vigenere("LXFOPVEFRNHR", "LEMON"))

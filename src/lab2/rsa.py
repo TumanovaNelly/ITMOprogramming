@@ -27,7 +27,9 @@ Euclid's algorithm for determining the greatest common divisor.
 1
 """
 def gcd(a: int, b: int) -> int:
-    while a > 0:
+    if a < 1 or b < 1:
+        raise ValueError("Both numbers must be natural")
+    while a != 0:
         a, b = b % a, a
     return b
 
@@ -54,13 +56,12 @@ def multiplicative_inverse(e: int, phi: int) -> int:
         raise ValueError("e and phi aren't coprime")
     return y0 + (phi if y0 < 0 else 0)
 
-print(multiplicative_inverse(95, 391))
 
 def generate_keypair(p: int, q: int) -> tp.Tuple[tp.Tuple[int, int], tp.Tuple[int, int]]:
     if not (is_prime(p) and is_prime(q)):
         raise ValueError("Both numbers must be prime.")
     if p < 17 or q < 17:
-        raise ValueError("Îne of the numbers is too small, choose numbers greater than 16")
+        raise ValueError("One of the numbers is too small, choose numbers greater than 16")
     elif p == q:
         raise ValueError("p and q cannot be equal")
 
