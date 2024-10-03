@@ -4,9 +4,11 @@ from calculator import Calculator
 from tkinter import *
 from tkinter import ttk
 
+# создание окна
 window = Tk()
 window.title("MegaCalculator")
 
+# настройки окна
 window_start_width = 300
 window_start_height = 400
 
@@ -36,8 +38,8 @@ memory_combobox.place(rely=0.2, relwidth=1, anchor=W)
 buttons_frame = ttk.Frame(borderwidth=2, relief=SOLID)
 buttons_frame.place(rely=0.3, relwidth=1, relheight=0.7)
 
-#__________________________________
-
+# магическим образом к полям прикрепляется логика калькулятора
 megacalculator = Calculator(memory_combobox, input_data, errors_label, buttons_frame)
 
+# запуск приложения
 window.mainloop()
