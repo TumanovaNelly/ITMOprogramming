@@ -6,7 +6,13 @@ import operator
 
 
 class Calculator:
-    def __init__(self, output_place: ttk.Combobox, enter_place: Entry, errors_place: Label, buttons_frame: ttk.Frame):
+    def __init__(
+        self,
+        output_place: ttk.Combobox,
+        enter_place: Entry,
+        errors_place: Label,
+        buttons_frame: ttk.Frame,
+    ):
         self.enter = enter_place
         self.output = output_place
         self.errors = errors_place
@@ -15,52 +21,177 @@ class Calculator:
         # параметры кнопок
         buttons_settings = (
             (
-                dict(text="◀", font=("Arial", 20, "bold"), fg="white", bg="gray", command=self.back),
-                dict(text="▶", font=("Arial", 20, "bold"), fg="white", bg="gray", command=self.forward),
+                dict(
+                    text="◀",
+                    font=("Arial", 20, "bold"),
+                    fg="white",
+                    bg="gray",
+                    command=self.back,
+                ),
+                dict(
+                    text="▶",
+                    font=("Arial", 20, "bold"),
+                    fg="white",
+                    bg="gray",
+                    command=self.forward,
+                ),
             ),
             (
-                dict(text="(", font=("Arial", 20, "bold"), fg="#FF4E00", bg="white", command=lambda: self.add("(")),
-                dict(text=")", font=("Arial", 20, "bold"), fg="#FF4E00", bg="white", command=lambda: self.add(")")),
-                dict(text="÷", font=("Arial", 26), fg="#FF4E00", bg="white", command=lambda: self.add("÷")),
-                dict(text="DEL", font=("Arial", 17, "bold"), fg="white", bg="#FF4E00", command=self.dlt),
+                dict(
+                    text="(",
+                    font=("Arial", 20, "bold"),
+                    fg="#FF4E00",
+                    bg="white",
+                    command=lambda: self.add("("),
+                ),
+                dict(
+                    text=")",
+                    font=("Arial", 20, "bold"),
+                    fg="#FF4E00",
+                    bg="white",
+                    command=lambda: self.add(")"),
+                ),
+                dict(
+                    text="÷",
+                    font=("Arial", 26),
+                    fg="#FF4E00",
+                    bg="white",
+                    command=lambda: self.add("÷"),
+                ),
+                dict(
+                    text="DEL",
+                    font=("Arial", 17, "bold"),
+                    fg="white",
+                    bg="#FF4E00",
+                    command=self.dlt,
+                ),
             ),
             (
-                dict(text="7", font=("Arial", 20, "bold"), bg="white", command=lambda: self.add("7")),
-                dict(text="8", font=("Arial", 20, "bold"), bg="white", command=lambda: self.add("8")),
-                dict(text="9", font=("Arial", 20, "bold"), bg="white", command=lambda: self.add("9")),
-                dict(text="×", font=("Arial", 27), fg="#FF4E00", bg="white", command=lambda: self.add("×")),
+                dict(
+                    text="7",
+                    font=("Arial", 20, "bold"),
+                    bg="white",
+                    command=lambda: self.add("7"),
+                ),
+                dict(
+                    text="8",
+                    font=("Arial", 20, "bold"),
+                    bg="white",
+                    command=lambda: self.add("8"),
+                ),
+                dict(
+                    text="9",
+                    font=("Arial", 20, "bold"),
+                    bg="white",
+                    command=lambda: self.add("9"),
+                ),
+                dict(
+                    text="×",
+                    font=("Arial", 27),
+                    fg="#FF4E00",
+                    bg="white",
+                    command=lambda: self.add("×"),
+                ),
             ),
             (
-                dict(text="4", font=("Arial", 20, "bold"), bg="white", command=lambda: self.add("4")),
-                dict(text="5", font=("Arial", 20, "bold"), bg="white", command=lambda: self.add("5")),
-                dict(text="6", font=("Arial", 20, "bold"), bg="white", command=lambda: self.add("6")),
-                dict(text="+", font=("Arial", 27), fg="#FF4E00", bg="white", command=lambda: self.add("+")),
+                dict(
+                    text="4",
+                    font=("Arial", 20, "bold"),
+                    bg="white",
+                    command=lambda: self.add("4"),
+                ),
+                dict(
+                    text="5",
+                    font=("Arial", 20, "bold"),
+                    bg="white",
+                    command=lambda: self.add("5"),
+                ),
+                dict(
+                    text="6",
+                    font=("Arial", 20, "bold"),
+                    bg="white",
+                    command=lambda: self.add("6"),
+                ),
+                dict(
+                    text="+",
+                    font=("Arial", 27),
+                    fg="#FF4E00",
+                    bg="white",
+                    command=lambda: self.add("+"),
+                ),
             ),
             (
-                dict(text="1", font=("Arial", 20, "bold"), bg="white", command=lambda: self.add("1")),
-                dict(text="2", font=("Arial", 20, "bold"), bg="white", command=lambda: self.add("2")),
-                dict(text="3", font=("Arial", 20, "bold"), bg="white", command=lambda: self.add("3")),
-                dict(text="-", font=("Arial", 27), fg="#FF4E00", bg="white", command=lambda: self.add("-")),
+                dict(
+                    text="1",
+                    font=("Arial", 20, "bold"),
+                    bg="white",
+                    command=lambda: self.add("1"),
+                ),
+                dict(
+                    text="2",
+                    font=("Arial", 20, "bold"),
+                    bg="white",
+                    command=lambda: self.add("2"),
+                ),
+                dict(
+                    text="3",
+                    font=("Arial", 20, "bold"),
+                    bg="white",
+                    command=lambda: self.add("3"),
+                ),
+                dict(
+                    text="-",
+                    font=("Arial", 27),
+                    fg="#FF4E00",
+                    bg="white",
+                    command=lambda: self.add("-"),
+                ),
             ),
             (
-                dict(text="AC", font=("Arial", 19, "bold"), fg="white", bg="#FF4E00", command=self.ac),
-                dict(text="0", font=("Arial", 20, "bold"), bg="white", command=lambda: self.add("0")),
-                dict(text=".", font=("Arial", 30), fg="#FF4E00", bg="white", command=lambda: self.add(".")),
-                dict(text="=", font=("Arial", 27, "bold"), fg="white", bg="#FF4E00", command=self.write_result),
+                dict(
+                    text="AC",
+                    font=("Arial", 19, "bold"),
+                    fg="white",
+                    bg="#FF4E00",
+                    command=self.ac,
+                ),
+                dict(
+                    text="0",
+                    font=("Arial", 20, "bold"),
+                    bg="white",
+                    command=lambda: self.add("0"),
+                ),
+                dict(
+                    text=".",
+                    font=("Arial", 30),
+                    fg="#FF4E00",
+                    bg="white",
+                    command=lambda: self.add("."),
+                ),
+                dict(
+                    text="=",
+                    font=("Arial", 27, "bold"),
+                    fg="white",
+                    bg="#FF4E00",
+                    command=self.write_result,
+                ),
             ),
         )
 
-        # размещаем кнопки 
+        # размещаем кнопки
         but_lines = len(buttons_settings)
         but_height_share = 1 / (but_lines * 2 - 1)
         for row in range(but_lines):
             but_columns = len(buttons_settings[row])
             but_width_share = 1 / but_columns
             for column in range(but_columns):
-                button = Button(master=self.buttons_frame, **buttons_settings[row][column])
+                button = Button(
+                    master=self.buttons_frame, **buttons_settings[row][column]
+                )
                 button.place(
                     relx=column * but_width_share,
-                    rely=but_height_share * 2 * row - (but_height_share if row > 0 else 0),
+                    rely=but_height_share * 2 * row
+                    - (but_height_share if row > 0 else 0),
                     relwidth=but_width_share,
                     relheight=but_height_share * (2 if row > 0 else 1),
                 )
@@ -70,15 +201,15 @@ class Calculator:
         def disable_entry(event):
             if event.keysym in self.allowed__add_func:
                 self.add(self.allowed__add_func[event.keysym])
-            elif event.keysym == 'Return' or event.keysym == 'equal':
+            elif event.keysym == "Return" or event.keysym == "equal":
                 self.write_result()
-            elif event.keysym == 'BackSpace':
+            elif event.keysym == "BackSpace":
                 self.dlt()
-            elif event.keysym == 'Delete':
+            elif event.keysym == "Delete":
                 self.ac()
-            elif event.keysym == 'Left':
+            elif event.keysym == "Left":
                 self.back()
-            elif event.keysym == 'Right':
+            elif event.keysym == "Right":
                 self.forward()
 
             return "break"
@@ -92,63 +223,84 @@ class Calculator:
             self.ac()
             self.enter.insert(0, selection[:-1])
 
-        self.output.bind("<<ComboboxSelected>>", selected) 
+        self.output.bind("<<ComboboxSelected>>", selected)
 
     allowed__add_func = {
-            "parenleft": "(",
-            "parenright": ")",
-            "plus": "+",
-            "minus": "-",
-            "slash": "÷",
-            "asterisk": "×",
-            "period": ".",
-            "0": "0",
-            "1": "1",
-            "2": "2",
-            "3": "3",
-            "4": "4",
-            "5": "5",
-            "6": "6",
-            "7": "7",
-            "8": "8",
-            "9": "9",
-        }
-#_______________________________________________________________________________________________________
+        "parenleft": "(",
+        "parenright": ")",
+        "plus": "+",
+        "minus": "-",
+        "slash": "÷",
+        "asterisk": "×",
+        "period": ".",
+        "0": "0",
+        "1": "1",
+        "2": "2",
+        "3": "3",
+        "4": "4",
+        "5": "5",
+        "6": "6",
+        "7": "7",
+        "8": "8",
+        "9": "9",
+    }
+
+    # _______________________________________________________________________________________________________
     # функции, срабатывающие при нажатии кнопок
     def add(self, symbol):
         expression = self.enter.get()
         cursor_position = self.enter.index(INSERT)
 
         if symbol in string.digits:
-            if cursor_position < self.enter.index(END) and expression[cursor_position] == "(":
+            if (
+                cursor_position < self.enter.index(END)
+                and expression[cursor_position] == "("
+            ):
                 self.enter.insert(INSERT, "×")
                 self.enter.icursor(cursor_position)
             if cursor_position > 0 and expression[cursor_position - 1] == ")":
                 self.enter.insert(INSERT, "×")
 
         if symbol == "(":
-            if cursor_position < self.enter.index(END) and expression[cursor_position] in ".×÷":  # после ( не может быть .×÷
+            if (
+                cursor_position < self.enter.index(END)
+                and expression[cursor_position] in ".×÷"
+            ):  # после ( не может быть .×÷
                 return
-            if cursor_position > 0 and (expression[cursor_position - 1] in string.digits or expression[cursor_position - 1] in ".)"):
-                    self.enter.insert(INSERT, "×")
+            if cursor_position > 0 and (
+                expression[cursor_position - 1] in string.digits
+                or expression[cursor_position - 1] in ".)"
+            ):
+                self.enter.insert(INSERT, "×")
 
         if symbol == ")":
-            if cursor_position > 0 and expression[cursor_position - 1] in self.OPERATORS:
-                return 
+            if (
+                cursor_position > 0
+                and expression[cursor_position - 1] in self.OPERATORS
+            ):
+                return
 
             if cursor_position < self.enter.index(END):
                 if expression[cursor_position] == ".":
-                    return 
+                    return
 
-                if expression[cursor_position] in string.digits or expression[cursor_position] == "(":
+                if (
+                    expression[cursor_position] in string.digits
+                    or expression[cursor_position] == "("
+                ):
                     self.enter.insert(INSERT, "×")
                     self.enter.icursor(cursor_position)
 
         if symbol in self.OPERATORS:
-            if symbol in "×÷" and (cursor_position == 0 or expression[cursor_position - 1] == "("):
-                return 
+            if symbol in "×÷" and (
+                cursor_position == 0 or expression[cursor_position - 1] == "("
+            ):
+                return
 
-            if cursor_position > 0 and expression[cursor_position - 1] in self.OPERATORS:
+            if (
+                cursor_position > 0
+                and expression[cursor_position - 1] in self.OPERATORS
+            ):
                 if cursor_position == 1 and symbol in "×÷":
                     return
                 self.enter.delete(cursor_position - 1)
@@ -156,10 +308,10 @@ class Calculator:
 
             if cursor_position < self.enter.index(END):
                 if expression[cursor_position] == ".":
-                    return 
+                    return
                 if expression[cursor_position] in self.OPERATORS:
                     if cursor_position == 0 and symbol in "×÷":
-                        return 
+                        return
                     self.enter.delete(cursor_position)
 
         if symbol == ".":
@@ -167,7 +319,7 @@ class Calculator:
             while cur >= 0 and expression[cur] in string.digits:
                 cur -= 1
             if cur == cursor_position - 1 or cur >= 0 and expression[cur] == ".":
-                return 
+                return
 
             cur = cursor_position
             while cur < self.enter.index(END) and expression[cur] in string.digits:
@@ -175,19 +327,27 @@ class Calculator:
             if cur < self.enter.index(END) and expression[cur] == ".":
                 return
 
-        self.enter.insert(INSERT, symbol)           
+        self.enter.insert(INSERT, symbol)
 
     def dlt(self):
         cursor_position = self.enter.index(INSERT) - 1
         if cursor_position < 0:
-            return 
-    
+            return
+
         expression = self.enter.get()
         symbol = expression[cursor_position]
 
-        if symbol in string.digits and (cursor_position == 0 or expression[cursor_position - 1] not in string.digits) and cursor_position < self.enter.index(END) - 1 and expression[cursor_position + 1] == ".":
+        if (
+            symbol in string.digits
+            and (
+                cursor_position == 0
+                or expression[cursor_position - 1] not in string.digits
+            )
+            and cursor_position < self.enter.index(END) - 1
+            and expression[cursor_position + 1] == "."
+        ):
             self.enter.insert(cursor_position + 1, "0")
-    
+
         if symbol in self.OPERATORS and 0 < cursor_position < self.enter.index(END) - 1:
             dots = False
             cur = cursor_position - 1
@@ -201,7 +361,6 @@ class Calculator:
                 cur += 1
             if cur < self.enter.index(END) and expression[cur] == "." and dots:
                 self.enter.delete(cur)
-    
 
         self.enter.delete(cursor_position)
 
@@ -219,15 +378,16 @@ class Calculator:
             self.enter.icursor(cursor_position + 1)
 
     memory = []
+
     def write_result(self):
         self.memory.append(self.enter.get() + "=")
         self.ac()
         self.output["values"] = self.memory
         self.output.set(self.memory[-1])
-        
+
         message = str()
         try:
-            self.enter.insert(0, self.get_answer(self.memory[-1]))
+            self.enter.insert(0, self.get_answer(self.memory[-1][:-1]))
         except ValueError:
             message = "INCORRECT NUMBER"
         except ZeroDivisionError:
@@ -251,14 +411,17 @@ class Calculator:
 
         def parse(formula_string):
             number = ""
+
             for sym in formula_string:
                 if sym in "1234567890.":
                     number += sym
-                elif number:
-                    yield Decimal(number)
-                    number = ""
-                if sym in self.OPERATORS or sym in "()":
+                elif sym in self.OPERATORS or sym in "()":
+                    if number:
+                        yield Decimal(number)
+                        number = ""
                     yield sym
+                else:
+                    raise ValueError()
             if number:
                 yield Decimal(number)
 
@@ -297,9 +460,6 @@ class Calculator:
             return stack[0]
 
         return calc(shunting_yard(parse(formula)))
-    
-
-#_______________________________________________________________________________________________________
 
 
-
+# _______________________________________________________________________________________________________

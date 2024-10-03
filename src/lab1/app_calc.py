@@ -39,8 +39,5 @@ buttons_frame.place(rely=0.3, relwidth=1, relheight=0.7)
 #__________________________________
 
 megacalculator = Calculator(memory_combobox, input_data, errors_label, buttons_frame)
-# for sym in "2+2":
-#     megacalculator.add(sym)
-# megacalculator.write_result()
 
 window.mainloop()
