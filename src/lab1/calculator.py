@@ -260,20 +260,26 @@ class Calculator:
 
     # def eval():
     def get_answer(self, formula):
-        assert formula[0] not in "×÷"
-        formula = "0" + formula.replace("(", "(0")
-
         def parse(formula_string):
             number = []
 
-            for sym in formula_string:
-                if sym in "1234567890.":
-                    number.append(sym)
-                elif sym in self.OPERATORS or sym in "()":
+            for i in range(len(formula_string)):
+                if formula_string[i] in string.digits or formula_string[i] == ".":
+                    if i > 0 and formula_string[i - 1] == ")":
+                        yield "×"
+
+                    number.append(formula_string[i])
+                elif formula_string[i] in "+-" and (i == 0 or formula_string[i - 1] == "("):
+                    number.append(formula_string[i])
+                elif formula_string[i] in self.OPERATORS or formula_string[i] in "()":
                     if number:
                         yield Decimal("".join(number))
                         number.clear()
-                    yield sym
+
+                    if formula_string[i] == "(" and i > 0 and (formula_string[i - 1] in string.digits or formula_string[i - 1]  in ".)"):
+                        yield "×"
+
+                    yield formula_string[i]
                 else:
                     raise ValueError()
             if number:
