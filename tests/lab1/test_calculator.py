@@ -1,6 +1,6 @@
 import unittest
 import sys
-sys.path.append('C:/Users/Admin/Desktop/ITMO/Programming/src')
+sys.path.append('../../src')
 from lab1.calculator import Calculator
 from tkinter import *
 from tkinter import ttk
