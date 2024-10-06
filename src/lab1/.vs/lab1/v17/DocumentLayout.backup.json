@@ -1,0 +1,70 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Admin\\Desktop\\PersonalPapka\\ITMO\\Programming\\src\\lab1\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Admin\\Desktop\\PersonalPapka\\ITMO\\Programming\\src\\lab1\\app_calc.py||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:app_calc.py||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Admin\\Desktop\\PersonalPapka\\ITMO\\Programming\\src\\lab1\\calculator.py||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:calculator.py||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Admin\\Desktop\\PersonalPapka\\ITMO\\Programming\\src\\lab1\\__init__.py||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:__init__.py||{8B382828-6202-11D1-8870-0000F87579D2}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "app_calc.py",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\PersonalPapka\\ITMO\\Programming\\src\\lab1\\app_calc.py",
+              "RelativeDocumentMoniker": "app_calc.py",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\PersonalPapka\\ITMO\\Programming\\src\\lab1\\app_calc.py",
+              "RelativeToolTip": "app_calc.py",
+              "ViewState": "AgIAABIAAAAAAAAAAAAAACQAAAA2AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
+              "WhenOpened": "2024-09-28T11:39:45.396Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "__init__.py",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\PersonalPapka\\ITMO\\Programming\\src\\lab1\\__init__.py",
+              "RelativeDocumentMoniker": "__init__.py",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\PersonalPapka\\ITMO\\Programming\\src\\lab1\\__init__.py",
+              "RelativeToolTip": "__init__.py",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
+              "WhenOpened": "2024-09-28T11:38:55.924Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "calculator.py",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\PersonalPapka\\ITMO\\Programming\\src\\lab1\\calculator.py",
+              "RelativeDocumentMoniker": "calculator.py",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\PersonalPapka\\ITMO\\Programming\\src\\lab1\\calculator.py",
+              "RelativeToolTip": "calculator.py",
+              "ViewState": "AgIAALoAAAAAAAAAAAAAAL4AAABYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
+              "WhenOpened": "2024-09-28T11:38:46.892Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
