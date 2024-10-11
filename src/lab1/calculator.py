@@ -1,12 +1,18 @@
-﻿from tkinter import *
+﻿from tkinter import Entry, Label, Button, END, INSERT
 from tkinter import ttk
-import string
 from decimal import Decimal
+import string
 import operator
 
 
 class Calculator:
-    def __init__(self, output_place: ttk.Combobox, enter_place: Entry, errors_place: Label, buttons_frame: ttk.Frame):
+    def __init__(
+        self,
+        output_place: ttk.Combobox,
+        enter_place: Entry,
+        errors_place: Label,
+        buttons_frame: ttk.Frame,
+    ):
         self.enter = enter_place
         self.output = output_place
         self.errors = errors_place
@@ -15,38 +21,160 @@ class Calculator:
         # параметры кнопок
         buttons_settings = (
             (
-                dict(text="◀", font=("Arial", 20, "bold"), fg="white", bg="gray", command=self.back),
-                dict(text="▶", font=("Arial", 20, "bold"), fg="white", bg="gray", command=self.forward),
+                dict(
+                    text="◀",
+                    font=("Arial", 20, "bold"),
+                    fg="white",
+                    bg="gray",
+                    command=self.back,
+                ),
+                dict(
+                    text="▶",
+                    font=("Arial", 20, "bold"),
+                    fg="white",
+                    bg="gray",
+                    command=self.forward,
+                ),
             ),
             (
-                dict(text="(", font=("Arial", 20, "bold"), fg="#FF4E00", bg="white", command=lambda: self.add("(")),
-                dict(text=")", font=("Arial", 20, "bold"), fg="#FF4E00", bg="white", command=lambda: self.add(")")),
-                dict(text="÷", font=("Arial", 26), fg="#FF4E00", bg="white", command=lambda: self.add("÷")),
-                dict(text="DEL", font=("Arial", 17, "bold"), fg="white", bg="#FF4E00", command=self.dlt),
+                dict(
+                    text="(",
+                    font=("Arial", 20, "bold"),
+                    fg="#FF4E00",
+                    bg="white",
+                    command=lambda: self.add("("),
+                ),
+                dict(
+                    text=")",
+                    font=("Arial", 20, "bold"),
+                    fg="#FF4E00",
+                    bg="white",
+                    command=lambda: self.add(")"),
+                ),
+                dict(
+                    text="÷",
+                    font=("Arial", 26),
+                    fg="#FF4E00",
+                    bg="white",
+                    command=lambda: self.add("÷"),
+                ),
+                dict(
+                    text="DEL",
+                    font=("Arial", 17, "bold"),
+                    fg="white",
+                    bg="#FF4E00",
+                    command=self.dlt,
+                ),
             ),
             (
-                dict(text="7", font=("Arial", 20, "bold"), bg="white", command=lambda: self.add("7")),
-                dict(text="8", font=("Arial", 20, "bold"), bg="white", command=lambda: self.add("8")),
-                dict(text="9", font=("Arial", 20, "bold"), bg="white", command=lambda: self.add("9")),
-                dict(text="×", font=("Arial", 27), fg="#FF4E00", bg="white", command=lambda: self.add("×")),
+                dict(
+                    text="7",
+                    font=("Arial", 20, "bold"),
+                    bg="white",
+                    command=lambda: self.add("7"),
+                ),
+                dict(
+                    text="8",
+                    font=("Arial", 20, "bold"),
+                    bg="white",
+                    command=lambda: self.add("8"),
+                ),
+                dict(
+                    text="9",
+                    font=("Arial", 20, "bold"),
+                    bg="white",
+                    command=lambda: self.add("9"),
+                ),
+                dict(
+                    text="×",
+                    font=("Arial", 27),
+                    fg="#FF4E00",
+                    bg="white",
+                    command=lambda: self.add("×"),
+                ),
             ),
             (
-                dict(text="4", font=("Arial", 20, "bold"), bg="white", command=lambda: self.add("4")),
-                dict(text="5", font=("Arial", 20, "bold"), bg="white", command=lambda: self.add("5")),
-                dict(text="6", font=("Arial", 20, "bold"), bg="white", command=lambda: self.add("6")),
-                dict(text="+", font=("Arial", 27), fg="#FF4E00", bg="white", command=lambda: self.add("+")),
+                dict(
+                    text="4",
+                    font=("Arial", 20, "bold"),
+                    bg="white",
+                    command=lambda: self.add("4"),
+                ),
+                dict(
+                    text="5",
+                    font=("Arial", 20, "bold"),
+                    bg="white",
+                    command=lambda: self.add("5"),
+                ),
+                dict(
+                    text="6",
+                    font=("Arial", 20, "bold"),
+                    bg="white",
+                    command=lambda: self.add("6"),
+                ),
+                dict(
+                    text="+",
+                    font=("Arial", 27),
+                    fg="#FF4E00",
+                    bg="white",
+                    command=lambda: self.add("+"),
+                ),
             ),
             (
-                dict(text="1", font=("Arial", 20, "bold"), bg="white", command=lambda: self.add("1")),
-                dict(text="2", font=("Arial", 20, "bold"), bg="white", command=lambda: self.add("2")),
-                dict(text="3", font=("Arial", 20, "bold"), bg="white", command=lambda: self.add("3")),
-                dict(text="-", font=("Arial", 27), fg="#FF4E00", bg="white", command=lambda: self.add("-")),
+                dict(
+                    text="1",
+                    font=("Arial", 20, "bold"),
+                    bg="white",
+                    command=lambda: self.add("1"),
+                ),
+                dict(
+                    text="2",
+                    font=("Arial", 20, "bold"),
+                    bg="white",
+                    command=lambda: self.add("2"),
+                ),
+                dict(
+                    text="3",
+                    font=("Arial", 20, "bold"),
+                    bg="white",
+                    command=lambda: self.add("3"),
+                ),
+                dict(
+                    text="-",
+                    font=("Arial", 27),
+                    fg="#FF4E00",
+                    bg="white",
+                    command=lambda: self.add("-"),
+                ),
             ),
             (
-                dict(text="AC", font=("Arial", 19, "bold"), fg="white", bg="#FF4E00", command=self.ac),
-                dict(text="0", font=("Arial", 20, "bold"), bg="white", command=lambda: self.add("0")),
-                dict(text=".", font=("Arial", 30), fg="#FF4E00", bg="white", command=lambda: self.add(".")),
-                dict(text="=", font=("Arial", 27, "bold"), fg="white", bg="#FF4E00", command=self.write_result),
+                dict(
+                    text="AC",
+                    font=("Arial", 19, "bold"),
+                    fg="white",
+                    bg="#FF4E00",
+                    command=self.ac,
+                ),
+                dict(
+                    text="0",
+                    font=("Arial", 20, "bold"),
+                    bg="white",
+                    command=lambda: self.add("0"),
+                ),
+                dict(
+                    text=".",
+                    font=("Arial", 30),
+                    fg="#FF4E00",
+                    bg="white",
+                    command=lambda: self.add("."),
+                ),
+                dict(
+                    text="=",
+                    font=("Arial", 27, "bold"),
+                    fg="white",
+                    bg="#FF4E00",
+                    command=self.write_result,
+                ),
             ),
         )
 
@@ -69,25 +197,27 @@ class Calculator:
                 )
 
         # Разрешаем ввод только определенных символов
-        allowed__add_func = {   # клавиши, после нажатия на которые будет вызываться функция add()
-            "parenleft": "(",
-            "parenright": ")",
-            "plus": "+",
-            "minus": "-",
-            "slash": "÷",
-            "asterisk": "×",
-            "period": ".",
-            "0": "0",
-            "1": "1",
-            "2": "2",
-            "3": "3",
-            "4": "4",
-            "5": "5",
-            "6": "6",
-            "7": "7",
-            "8": "8",
-            "9": "9",
-        }
+        allowed__add_func = (
+            {  # клавиши, после нажатия на которые будет вызываться функция add()
+                "parenleft": "(",
+                "parenright": ")",
+                "plus": "+",
+                "minus": "-",
+                "slash": "÷",
+                "asterisk": "×",
+                "period": ".",
+                "0": "0",
+                "1": "1",
+                "2": "2",
+                "3": "3",
+                "4": "4",
+                "5": "5",
+                "6": "6",
+                "7": "7",
+                "8": "8",
+                "9": "9",
+            }
+        )
 
         def disable_entry(event):
             if event.keysym in allowed__add_func:
@@ -115,71 +245,101 @@ class Calculator:
             self.enter.insert(0, selection[:-1])
 
         self.output.bind("<<ComboboxSelected>>", selected)
-    # _______________________________________________________________________________________________________
+
+    # ________________________________________________________________
     # функции, срабатывающие при нажатии кнопок
     def add(self, symbol):
         expression = self.enter.get()
         cursor_position = self.enter.index(INSERT)
 
         if symbol in string.digits:
-            if (cursor_position < self.enter.index(END)
-                and expression[cursor_position] == "("):
+            if (
+                cursor_position < self.enter.index(END)
+                and expression[cursor_position] == "("
+            ):
                 self.enter.insert(INSERT, "×")  # перед ( вставляется ×
                 self.enter.icursor(cursor_position)
             if cursor_position > 0 and expression[cursor_position - 1] == ")":
                 self.enter.insert(INSERT, "×")  # после ) вставляется ×
 
         if symbol == "(":
-            if (cursor_position < self.enter.index(END)
-                and expression[cursor_position] in ".×÷"):  # после ( не может быть .×÷
+            if (
+                cursor_position < self.enter.index(END)
+                and expression[cursor_position] in ".×÷"
+            ):  # после ( не может быть .×÷
                 return
-            if cursor_position > 0 and (expression[cursor_position - 1] in string.digits
-                or expression[cursor_position - 1] in ".)"):  # перед ( вставляется ×
+            if cursor_position > 0 and (
+                expression[cursor_position - 1] in string.digits
+                or expression[cursor_position - 1] in ".)"
+            ):  # перед ( вставляется ×
                 self.enter.insert(INSERT, "×")
 
         if symbol == ")":
-            if (cursor_position > 0
-                and expression[cursor_position - 1] in self.OPERATORS):
+            if (
+                cursor_position > 0
+                and expression[cursor_position - 1] in self.OPERATORS
+            ):
                 return  # нельзя поставить ) после оператора
 
             if cursor_position < self.enter.index(END):
                 if expression[cursor_position] == ".":
                     return  # нельзя поставить ) перед точкой
 
-                if (expression[cursor_position] in string.digits
-                    or expression[cursor_position] == "("):
-                    self.enter.insert(INSERT, "×")  # если следующий символ - число, добавится ×
+                if (
+                    expression[cursor_position] in string.digits
+                    or expression[cursor_position] == "("
+                ):
+                    self.enter.insert(
+                        INSERT, "×"
+                    )  # если следующий символ - число, добавится ×
                     self.enter.icursor(cursor_position)
 
         if symbol in self.OPERATORS:
-            if symbol in "×÷" and (cursor_position == 0 or expression[cursor_position - 1] == "("):
-                return    # нельзя ставить операторы ×÷ в начале или после (
+            if symbol in "×÷" and (
+                cursor_position == 0 or expression[cursor_position - 1] == "("
+            ):
+                return  # нельзя ставить операторы ×÷ в начале или после (
 
-            if cursor_position > 0 and expression[cursor_position - 1] in self.OPERATORS:
-                if (cursor_position == 1 or expression[cursor_position - 2] == "(") and symbol in "×÷":
-                    return # нельзя ставить ×÷ в начале и после (
+            if (
+                cursor_position > 0
+                and expression[cursor_position - 1] in self.OPERATORS
+            ):
+                if (
+                    cursor_position == 1 or expression[cursor_position - 2] == "("
+                ) and symbol in "×÷":
+                    return  # нельзя ставить ×÷ в начале и после (
                 self.enter.delete(cursor_position - 1)
-                self.enter.icursor(cursor_position - 1) # если предыдущий символ оператор и вставляется также оператор, то предыдущий заменяется на новый 
+                self.enter.icursor(
+                    cursor_position - 1
+                )  # если предыдущий символ оператор и вставляется также оператор, то предыдущий заменяется на новый
 
             if cursor_position < self.enter.index(END):
-                if expression[cursor_position] == ".":  # перед точкой операторы не ставим
+                if (
+                    expression[cursor_position] == "."
+                ):  # перед точкой операторы не ставим
                     return
                 if expression[cursor_position] in self.OPERATORS:
-                    if (cursor_position == 0 or expression[cursor_position - 1] == "(") and symbol in "×÷":
+                    if (
+                        cursor_position == 0 or expression[cursor_position - 1] == "("
+                    ) and symbol in "×÷":
                         return
                     self.enter.delete(cursor_position)
 
-        if symbol == ".":  
+        if symbol == ".":
             cur = cursor_position - 1
             while cur >= 0 and expression[cur] in string.digits:
                 cur -= 1
-            if cur == cursor_position - 1 or cur >= 0 and expression[cur] == ".":  # если перед точкой нет цифр или до уже ставилась точка в текущем числе
+            if (
+                cur == cursor_position - 1 or cur >= 0 and expression[cur] == "."
+            ):  # если перед точкой нет цифр или до уже ставилась точка в текущем числе
                 return
 
             cur = cursor_position
             while cur < self.enter.index(END) and expression[cur] in string.digits:
                 cur += 1
-            if cur < self.enter.index(END) and expression[cur] == ".": # если после уже ставилась точка в этом числе
+            if (
+                cur < self.enter.index(END) and expression[cur] == "."
+            ):  # если после уже ставилась точка в этом числе
                 return
 
         self.enter.insert(INSERT, symbol)
@@ -192,28 +352,41 @@ class Calculator:
         expression = self.enter.get()
         symbol = expression[cursor_position]
 
-        if (symbol in string.digits  # если удаляем цифру и перед ней больше нет цифр, а после нее стоит точка, заменяем эту цифру на ноль    ...+|1.234 -> ...+|10.234 -> ...+|0.234             "|" - позиция курсора
-            and (cursor_position == 0 or expression[cursor_position - 1] not in string.digits)
+        if (
+            symbol
+            in string.digits  # если удаляем цифру и перед ней больше нет цифр, а после нее стоит точка, заменяем эту цифру на ноль    ...+|1.234 -> ...+|10.234 -> ...+|0.234             "|" - позиция курсора
+            and (
+                cursor_position == 0
+                or expression[cursor_position - 1] not in string.digits
+            )
             and cursor_position < self.enter.index(END) - 1
-            and expression[cursor_position + 1] == "."):
+            and expression[cursor_position + 1] == "."
+        ):
             self.enter.insert(cursor_position + 1, "0")
 
-        if (cursor_position == 0 or expression[cursor_position - 1] == "(") and (cursor_position < self.enter.index(END) - 1 and expression[cursor_position + 1] in "×÷"):
-            self.enter.delete(cursor_position + 1)   # если до ничего нет или стоит (, а после идут оператор ×÷, этот оператор тоже удаляется
+        if (cursor_position == 0 or expression[cursor_position - 1] == "(") and (
+            cursor_position < self.enter.index(END) - 1
+            and expression[cursor_position + 1] in "×÷"
+        ):
+            self.enter.delete(
+                cursor_position + 1
+            )  # если до ничего нет или стоит (, а после идут оператор ×÷, этот оператор тоже удаляется
 
         if symbol in self.OPERATORS and 0 < cursor_position < self.enter.index(END) - 1:
             dots = False
             cur = cursor_position - 1
             while cur >= 0 and expression[cur] in string.digits:
                 cur -= 1
-            if cur >= 0 and expression[cur] == ".":  
+            if cur >= 0 and expression[cur] == ".":
                 dots = True
 
             cur = cursor_position + 1
             while cur < self.enter.index(END) and expression[cur] in string.digits:
                 cur += 1
             if cur < self.enter.index(END) and expression[cur] == "." and dots:
-                self.enter.delete(cur) # если оператор между дробными числами, они соединяются в одно дробное число, иначе оператор просто удаляется
+                self.enter.delete(
+                    cur
+                )  # если оператор между дробными числами, они соединяются в одно дробное число, иначе оператор просто удаляется
 
         self.enter.delete(cursor_position)
 
@@ -269,14 +442,23 @@ class Calculator:
                         yield "×"
 
                     number.append(formula_string[i])
-                elif formula_string[i] in "+-" and (i == 0 or formula_string[i - 1] == "("):
+                elif formula_string[i] in "+-" and (
+                    i == 0 or formula_string[i - 1] == "("
+                ):
                     number.append(formula_string[i])
                 elif formula_string[i] in self.OPERATORS or formula_string[i] in "()":
                     if number:
                         yield Decimal("".join(number))
                         number.clear()
 
-                    if formula_string[i] == "(" and i > 0 and (formula_string[i - 1] in string.digits or formula_string[i - 1]  in ".)"):
+                    if (
+                        formula_string[i] == "("
+                        and i > 0
+                        and (
+                            formula_string[i - 1] in string.digits
+                            or formula_string[i - 1] in ".)"
+                        )
+                    ):
                         yield "×"
 
                     yield formula_string[i]
@@ -289,16 +471,19 @@ class Calculator:
             stack = []
             for token in parsed_formula:
                 if token in self.OPERATORS:
-                    while (stack and stack[-1] != "("
-                        and self.OPERATORS[token][0] <= self.OPERATORS[stack[-1]][0]):
+                    while (
+                        stack
+                        and stack[-1] != "("
+                        and self.OPERATORS[token][0] <= self.OPERATORS[stack[-1]][0]
+                    ):
                         yield stack.pop()
                     stack.append(token)
                 elif token == ")":
                     while stack:
-                        x = stack.pop()
-                        if x == "(":
+                        value = stack.pop()
+                        if value == "(":
                             break
-                        yield x
+                        yield value
                 elif token == "(":
                     stack.append(token)
                 else:
@@ -310,8 +495,8 @@ class Calculator:
             stack = []
             for token in polish:
                 if token in self.OPERATORS:
-                    y, x = stack.pop(), stack.pop()
-                    stack.append(self.OPERATORS[token][1](x, y))
+                    value2, value1 = stack.pop(), stack.pop()
+                    stack.append(self.OPERATORS[token][1](value1, value2))
                 else:
                     stack.append(token)
             return stack[0]

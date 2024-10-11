@@ -1,45 +1,52 @@
-# -*- coding: utf-8 -*-
 from tkinter import ttk
+from tkinter import Tk, Entry, Label, SOLID, W
 from calculator import Calculator
-from tkinter import *
-from tkinter import ttk
 
-# создание окна
+# СЃРѕР·РґР°РЅРёРµ РѕРєРЅР°
 window = Tk()
 window.title("MegaCalculator")
 
-# настройки окна
-window_start_width = 300
-window_start_height = 400
+# РЅР°СЃС‚СЂРѕР№РєРё РѕРєРЅР°
+WINDOW_START_WIDTH = 300
+WINDOW_START_HEIGHT = 400
 
-window.minsize(width=window_start_width, height=window_start_height)
+window.minsize(width=WINDOW_START_WIDTH, height=WINDOW_START_HEIGHT)
 
-screen_width = window.winfo_screenwidth()
-screen_height = window.winfo_screenheight()
+SCREEN_WIDTH = window.winfo_screenwidth()
+SCREEN_HEIGHT = window.winfo_screenheight()
 
-window_start_x = (screen_width // 2) - (window_start_width // 2)
-window_start_y = (screen_height // 2) - (window_start_height // 2)
+WINDOW_START_X = (SCREEN_WIDTH // 2) - (WINDOW_START_WIDTH // 2)
+WINDOW_START_Y = (SCREEN_HEIGHT // 2) - (WINDOW_START_HEIGHT // 2)
 
-window.geometry(f"{window_start_width}x{window_start_height}+{window_start_x}+{window_start_y}")
+window.geometry(
+    f"{WINDOW_START_WIDTH}x{WINDOW_START_HEIGHT}+{WINDOW_START_X}+{WINDOW_START_Y}"
+)
 
-# размещение полей ввода и вывода
+# СЂР°Р·РјРµС‰РµРЅРёРµ РїРѕР»РµР№ РІРІРѕРґР° Рё РІС‹РІРѕРґР°
 data_frame = ttk.Frame(borderwidth=2, relief=SOLID, padding=[7, 5])
 data_frame.place(relwidth=1, relheight=0.3)
 
 input_data = Entry(master=data_frame, font=("Arial", 20, "bold"), foreground="#FF4E00")
 input_data.place(rely=0.6, relwidth=1, anchor=W)
 
-errors_label = Label(master=data_frame, font=("Arial", 10, "bold"), foreground="#FF4E00", text="enter expression")
+errors_label = Label(
+    master=data_frame,
+    font=("Arial", 10, "bold"),
+    foreground="#FF4E00",
+    text="enter expression",
+)
 errors_label.place(rely=0.9, relwidth=1, anchor=W)
 
-memory_combobox = ttk.Combobox(master=data_frame, font=("Arial", 20, "bold"), state="readonly")
+memory_combobox = ttk.Combobox(
+    master=data_frame, font=("Arial", 20, "bold"), state="readonly"
+)
 memory_combobox.place(rely=0.2, relwidth=1, anchor=W)
 
 buttons_frame = ttk.Frame(borderwidth=2, relief=SOLID)
 buttons_frame.place(rely=0.3, relwidth=1, relheight=0.7)
 
-# магическим образом к полям прикрепляется логика калькулятора
+# РјР°РіРёС‡РµСЃРєРёРј РѕР±СЂР°Р·РѕРј Рє РїРѕР»СЏРј РїСЂРёРєСЂРµРїР»СЏРµС‚СЃСЏ Р»РѕРіРёРєР° РєР°Р»СЊРєСѓР»СЏС‚РѕСЂР°
 megacalculator = Calculator(memory_combobox, input_data, errors_label, buttons_frame)
 
-# запуск приложения
+# Р·Р°РїСѓСЃРє РїСЂРёР»РѕР¶РµРЅРёСЏ
 window.mainloop()
