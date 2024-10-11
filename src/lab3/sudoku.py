@@ -1,5 +1,7 @@
 from multiprocessing import Value
+from random import shuffle
 import pathlib
+from turtle import pos, position
 import typing as tp
 from uu import Error
 
@@ -138,7 +140,9 @@ def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
     for value in find_possible_values(grid, empty_pos):
         grid[empty_pos[0]][empty_pos[1]] = value
         try: return solve(grid)
-        except: grid[empty_pos[0]][empty_pos[1]] = '.'
+        except: pass
+
+    grid[empty_pos[0]][empty_pos[1]] = '.'
 
     raise Error("Судоку невозможно решить")
 
@@ -176,7 +180,17 @@ def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
     >>> check_solution(solution)
     True
     """
-    pass
+    FIELD_SIZE = 9
+    grid = solve([['.' for _ in range(FIELD_SIZE)] for _ in range(FIELD_SIZE)])
+
+    positions = [(row, col) for row in range(FIELD_SIZE) for col in range(FIELD_SIZE)]
+    shuffle(positions)
+
+    for i in range(FIELD_SIZE ** 2 - N):
+        grid[positions[i][0]][positions[i][1]] = '.'
+
+    return grid
+
 
 
 if __name__ == "__main__":
