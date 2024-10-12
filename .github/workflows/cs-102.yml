@@ -21,9 +21,6 @@ jobs:
         then
           pip install -r ${{ github.head_ref }}/requirements.txt
         fi
-    - name: Run unittests
-      run: |
-        python -m pytest
     - name: Run tests with xvfb
       run: |
         xvfb-run -a pytest
