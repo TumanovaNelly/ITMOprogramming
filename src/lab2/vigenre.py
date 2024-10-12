@@ -1,4 +1,4 @@
-NUM_LETTERS = ord('z') - ord('a') + 1
+NUM_LETTERS = ord("z") - ord("a") + 1
 
 def check_key(keyword: str) -> str:
     if not keyword:
@@ -12,6 +12,7 @@ def check_key(keyword: str) -> str:
         print(f"Keyword was modified to: {correct_key}")
     return correct_key
 
+
 """
 Encrypts plaintext using a Vigenere cipher.
 >>> encrypt_vigenere("PYTHON", "A")
@@ -24,16 +25,25 @@ Encrypts plaintext using a Vigenere cipher.
 def encrypt_vigenere(plaintext: str, keyword: str) -> str:
     keyword = check_key(keyword)
     ciphertext = []
-    for i in range(len(plaintext)):
-        new_ord = ord(plaintext[i])
-        if 'a' <= plaintext[i] <= 'z':
-            new_ord = ord('a') + (new_ord + ord(keyword[i % len(keyword)].lower()) - ord('a') * 2) % NUM_LETTERS
-        elif 'A' <= plaintext[i] <= 'Z':
-            new_ord = ord('A') + (new_ord + ord(keyword[i % len(keyword)].upper()) - ord('A') * 2) % NUM_LETTERS
+    for i, sym in enumerate(plaintext):
+        new_ord = ord(sym)
+        if "a" <= sym <= "z":
+            new_ord = (
+                ord("a")
+                + (new_ord + ord(keyword[i % len(keyword)].lower()) - ord("a") * 2)
+                % NUM_LETTERS
+            )
+        elif "A" <= sym <= "Z":
+            new_ord = (
+                ord("A")
+                + (new_ord + ord(keyword[i % len(keyword)].upper()) - ord("A") * 2)
+                % NUM_LETTERS
+            )
 
         ciphertext.append(chr(new_ord))
 
     return "".join(ciphertext)
+
 
 """
 Decrypts a ciphertext using a Vigenere cipher.
@@ -47,12 +57,18 @@ Decrypts a ciphertext using a Vigenere cipher.
 def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
     keyword = check_key(keyword)
     plaintext = []
-    for i in range(len(ciphertext)):
-        new_ord = ord(ciphertext[i])
-        if 'a' <= ciphertext[i] <= 'z':
-            new_ord = ord('a') + (new_ord - ord(keyword[i % len(keyword)].lower())) % NUM_LETTERS
-        elif 'A' <= ciphertext[i] <= 'Z':
-            new_ord = ord('A') + (new_ord - ord(keyword[i % len(keyword)].upper())) % NUM_LETTERS
+    for i, sym in enumerate(ciphertext):
+        new_ord = ord(sym)
+        if "a" <= sym <= "z":
+            new_ord = (
+                ord("a")
+                + (new_ord - ord(keyword[i % len(keyword)].lower())) % NUM_LETTERS
+            )
+        elif "A" <= sym <= "Z":
+            new_ord = (
+                ord("A")
+                + (new_ord - ord(keyword[i % len(keyword)].upper())) % NUM_LETTERS
+            )
 
         plaintext.append(chr(new_ord))
     return "".join(plaintext)

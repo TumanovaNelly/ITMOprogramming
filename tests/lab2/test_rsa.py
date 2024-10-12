@@ -1,6 +1,6 @@
 import unittest
 import sys
-sys.path.append('C:/Users/Admin/Desktop/ITMO/Programming/src')
+sys.path.append('../../src')
 from lab2.rsa import is_prime, gcd, multiplicative_inverse, generate_keypair
 
 class TestNumberTheory(unittest.TestCase):

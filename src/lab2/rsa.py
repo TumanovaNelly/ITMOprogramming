@@ -12,7 +12,7 @@ True
 False
 """
 def is_prime(n: int) -> bool:
-    if not (n > 0):
+    if n <= 0:
         raise ValueError("Number must be natural")
     for div in range(2, floor(n ** 0.5) + 1):
         if n % div == 0:
@@ -47,11 +47,11 @@ def multiplicative_inverse(e: int, phi: int) -> int:
     y0, y1 = 0, 1
 
     while e > 0:
-        q = phi_ // e 
+        q = phi_ // e   
         phi_, e = e, phi_ % e  
-        x0, x1 = x1, x0 - q * x1
-        y0, y1 = y1, y0 - q * y1
-    
+        x0, x1 = x1, x0 - q * x1   
+        y0, y1 = y1, y0 - q * y1   
+        
     if phi_ != 1:
         raise ValueError("e and phi aren't coprime")
     return y0 + (phi if y0 < 0 else 0)
@@ -62,7 +62,7 @@ def generate_keypair(p: int, q: int) -> tp.Tuple[tp.Tuple[int, int], tp.Tuple[in
         raise ValueError("Both numbers must be prime.")
     if p < 17 or q < 17:
         raise ValueError("One of the numbers is too small, choose numbers greater than 16")
-    elif p == q:
+    if p == q:
         raise ValueError("p and q cannot be equal")
 
     n = p * q

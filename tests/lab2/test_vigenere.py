@@ -1,6 +1,6 @@
 import unittest
 import sys
-sys.path.append('C:/Users/Admin/Desktop/ITMO/Programming/src')
+sys.path.append('../../src')
 from lab2.vigenre import encrypt_vigenere, decrypt_vigenere, check_key
 
 

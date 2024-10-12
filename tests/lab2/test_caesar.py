@@ -1,6 +1,6 @@
 import unittest
 import sys
-sys.path.append('C:/Users/Admin/Desktop/ITMO/Programming/src')
+sys.path.append('../../src')
 from lab2.caesar import encrypt_caesar, decrypt_caesar
 
 
