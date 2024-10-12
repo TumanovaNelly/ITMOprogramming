@@ -1,6 +1,6 @@
 from tkinter import ttk
 from tkinter import Tk, Entry, Label, SOLID, W
-from calculator import Calculator
+from lab1.calculator import Calculator
 
 # создание окна
 window = Tk()
