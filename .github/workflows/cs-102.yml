@@ -23,4 +23,7 @@ jobs:
         fi
     - name: Run unittests
       run: |
-        xvfb-run -m pytest
+        python -m pytest
+    - name: Run tests with xvfb
+      run: |
+        xvfb-run -a pytest
