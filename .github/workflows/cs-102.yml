@@ -21,6 +21,8 @@ jobs:
         then
           pip install -r ${{ github.head_ref }}/requirements.txt
         fi
-    - name: Run tests with xvfb
+    - name: Run unittests
       run: |
-        xvfb-run -a pytest
+        Xvfb :99 -screen 0 1920x1080x24 &
+        export DISPLAY=:99
+        python -m pytest
