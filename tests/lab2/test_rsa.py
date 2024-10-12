@@ -1,7 +1,5 @@
 import unittest
-import sys
-sys.path.append('../../src')
-from lab2.rsa import is_prime, gcd, multiplicative_inverse, generate_keypair
+from src.lab2.rsa import is_prime, gcd, multiplicative_inverse, generate_keypair
 
 class TestNumberTheory(unittest.TestCase):
     def test_is_prime(self):

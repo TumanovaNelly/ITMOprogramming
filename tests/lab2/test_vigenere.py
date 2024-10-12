@@ -1,7 +1,5 @@
 import unittest
-import sys
-sys.path.append('../../src')
-from lab2.vigenre import encrypt_vigenere, decrypt_vigenere, check_key
+from src.lab2.vigenre import encrypt_vigenere, decrypt_vigenere, check_key
 
 
 class TestVigenereCipher(unittest.TestCase):
