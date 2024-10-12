@@ -36,7 +36,7 @@ def decrypt_caesar(ciphertext: str, shift: int = 3) -> str:
     plaintext = []
     for sym in ciphertext:
         new_ord = ord(sym)
-        if 'a' <= sym <= 'z':
+        if 'a' <= sym <= 'z': 
             new_ord = ord('a') + (new_ord - ord('a') - shift) % NUM_LETTERS
         elif 'A' <= sym <= 'Z':
             new_ord = ord('A') + (new_ord - ord('A') - shift) % NUM_LETTERS
