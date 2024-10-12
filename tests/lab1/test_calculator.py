@@ -1,4 +1,6 @@
 import unittest
+import sys
+sys.path.append(r"..\..")
 from src.lab1.calculator import Calculator
 from tkinter import *
 from tkinter import ttk
