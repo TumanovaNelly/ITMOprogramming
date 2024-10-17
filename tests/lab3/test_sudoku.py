@@ -1,5 +1,4 @@
 import unittest
-
 from src.lab3 import sudoku
 
 
@@ -13,7 +12,7 @@ class TestSudoku(unittest.TestCase):
 
 
     def test_read_sudoku(self):
-        grid = sudoku.read_sudoku("..\..\src\lab3\puzzle1.txt")
+        grid = sudoku.read_sudoku(r"src\lab3\puzzle1.txt")
         self.assertIsInstance(grid, list)
         self.assertEqual(len(grid), sudoku.FIELD_SIDE)
         self.assertEqual(len(grid[0]), sudoku.FIELD_SIDE)
@@ -65,7 +64,7 @@ class TestSudoku(unittest.TestCase):
 
 
     def test_find_possible_values(self):
-        grid = sudoku.read_sudoku("..\..\src\lab3\puzzle1.txt")
+        grid = sudoku.read_sudoku(r"src\lab3\puzzle1.txt")
         values = sudoku.find_possible_values(grid, (0, 2))
         self.assertEqual(values, {'1', '2', '4'})
         values = sudoku.find_possible_values(grid, (4, 7))
@@ -73,7 +72,7 @@ class TestSudoku(unittest.TestCase):
 
 
     def test_solve(self):
-        grid = sudoku.read_sudoku("..\..\src\lab3\puzzle1.txt")
+        grid = sudoku.read_sudoku(r"src\lab3\puzzle1.txt")
         solution = sudoku.solve(grid)
         self.assertTrue(sudoku.check_solution(solution))
 

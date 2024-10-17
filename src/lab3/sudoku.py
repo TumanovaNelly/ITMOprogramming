@@ -130,9 +130,9 @@ def find_empty_positions(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.Tuple[in
     for row in range(len(grid)):
         for col in range(len(grid[row])):
             if grid[row][col] == '.':
-                return (row, col)
+                return row, col
 
-    return (-1, -1)
+    return -1, -1
 
 
 # Вернуть множество возможных значения для указанной позиции
