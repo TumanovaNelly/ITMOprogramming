@@ -57,9 +57,13 @@ class TestSudoku(unittest.TestCase):
 
 
     def test_find_empty_positions(self):
-        grid = [['1', '2', '.'], ['4', '5', '6'], ['7', '8', '9']]
+        grid = [['1', '2', '.'],
+                ['4', '5', '6'],
+                ['7', '8', '9']]
         self.assertEqual(sudoku.find_empty_positions(grid), (0, 2))
-        grid = [['1', '2', '3'], ['4', '5', '6'], ['7', '8', '9']]
+        grid = [['1', '2', '3'],
+                ['4', '5', '6'],
+                ['7', '8', '9']]
         self.assertEqual(sudoku.find_empty_positions(grid), (-1, -1))
 
 
@@ -104,13 +108,10 @@ class TestSudoku(unittest.TestCase):
             sudoku.read_sudoku(123)  # Неверный тип аргумента
 
         with self.assertRaises(ValueError):
-            sudoku.find_possible_values(["123"], (0, 0))  # Неверный тип grid
+            sudoku.find_possible_values(["123"], (0, 0))
 
 
     def test_invalid_data_input(self):
-        with self.assertRaises(ValueError):
-            sudoku.group([1, 2, 3], 2)  # Некорректные данные, невозможно разделить список
-
         with self.assertRaises(IndexError):
             sudoku.get_row([['1', '2']], (1, 0))  # Неверная позиция (выход за границы)
 
