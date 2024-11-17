@@ -4,11 +4,23 @@ from typing import Dict, List, Set
 
 class Film:
     def __init__(self, name: str) -> None:
-        self.name: str = name
-        self.views: int = 0
+        self.__name: str = name
+        self.__views: int = 0
+
+    @property
+    def name(self) -> str:
+        return self.__name
+
+    @property
+    def views(self) -> int:
+        return self.__views
+
+    @views.setter
+    def views(self, value: int) -> None:
+        self.__views = value
 
     def __str__(self) -> str:
-        return f'Film "{self.name}" has been viewed {self.views} times'
+        return f'Film "{self.__name}" has been viewed {self.__views} times'
 
 
 class FilmBase:

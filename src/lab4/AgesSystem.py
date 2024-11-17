@@ -3,13 +3,14 @@ from sortedcontainers import SortedDict
 
 
 class Person:
+    @property
+    def age(self) -> int:
+        return self.__age
+
     def __init__(self, name: str, age: int) -> None:
         self.__name = name
         if age > 123: raise ValueError("Age must be less than or equal to 123.")
         self.__age = age
-
-    def get_age(self) -> int:
-        return self.__age
 
     def __lt__(self, other_person: 'Person') -> bool:
         return self.__name < other_person.__name if self.__age == other_person.__age else self.__age > other_person.__age
@@ -45,7 +46,7 @@ class Groups:
         self.__groups[self.__borders[-1] + 1] = AgeGroup(self.__borders[-1] + 1, None)
 
     def add_person_to_group(self, person: Person) -> None:
-        self.__groups[self.__find_first_less_or_equal(person.get_age())].add_person(person)
+        self.__groups[self.__find_first_less_or_equal(person.age)].add_person(person)
 
     def print(self):
         for group in reversed(self.__groups.values()):
