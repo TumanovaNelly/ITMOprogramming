@@ -76,7 +76,7 @@ def generate_keypair(p: int, q: int) -> tp.Tuple[tp.Tuple[int, int], tp.Tuple[in
     # Use Extended Euclid's Algorithm to generate the private key
     d = multiplicative_inverse(e, phi)
     # Return public and private keypair
-    return ((e, n), (d, n))
+    return (e, n), (d, n)
 
 
 def encrypt(pk: tp.Tuple[int, int], plaintext: str) -> tp.List[int]:
