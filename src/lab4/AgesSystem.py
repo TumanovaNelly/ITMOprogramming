@@ -65,7 +65,7 @@ class Groups:
         return self.__borders[right] + 1
 
 
-def main():
+if __name__ == '__main__':
     groups = Groups(list(map(int, input("Enter the age limits: ").split())))
 
     while True:
@@ -77,7 +77,3 @@ def main():
         groups.add_person_to_group(Person(name, age))
 
     groups.print()
-
-
-if __name__ == '__main__':
-    main()
