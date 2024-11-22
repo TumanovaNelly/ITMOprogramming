@@ -108,7 +108,7 @@ class ViewersBase:
 
     def add_viewer(self, viewer: Viewer) -> None:
         for film in viewer.watched_films:
-            if film.identify not in self.__film_base:
+            if film.identify not in self.__film_base or self.__film_base[film.identify] != film:
                 raise ValueError("Unknown film")
             self.__watch_data[film] = self.__watch_data.get(film, 0) + 1
 
