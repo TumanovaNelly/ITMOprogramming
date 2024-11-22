@@ -1,90 +1,64 @@
 import unittest
-from unittest.mock import patch, mock_open
-from src.lab4.FilmsSystem import Film, FilmBase, ViewersBase
+from io import StringIO
+import sys
+from src.lab4.FilmsSystem import Film, Films, FilmBase, Viewer, ViewersBase
 
 
-class TestFilm(unittest.TestCase):
-    def test_film_initialization(self):
-        film = Film("Inception")
-        self.assertEqual(film.name, "Inception")
-        self.assertEqual(str(film), 'Film "Inception"')
-
-
-class TestFilmBase(unittest.TestCase):
+class TestFilmSystem(unittest.TestCase):
     def setUp(self):
-        self.film_base = FilmBase()
+        self.films = FilmBase()
+        self.films.add_film(1, Film("Inception"))
+        self.films.add_film(2, Film("Titanic"))
+        self.films.add_film(3, Film("Avatar"))
+        self.films.add_film(4, Film("The Matrix"))
+        self.viewers_base = ViewersBase(self.films)
 
     def test_add_and_get_film(self):
-        film = Film("Matrix")
-        self.film_base.add_film(1, film)
-        self.assertEqual(self.film_base.get_film(1).name, "Matrix")
+        self.assertRaises(KeyError, self.films.add_film, 1, Film("The Matrix"))
+        self.assertRaises(KeyError, self.films.__getitem__, 5)
+        new_film = Film("The Matrix 2")
+        self.films.add_film(5, new_film)
+        self.assertEqual(self.films.__getitem__(5), new_film)
 
-    def test_add_existing_film(self):
-        self.film_base.add_film(1, Film("Matrix"))
-        with self.assertRaises(KeyError):
-            self.film_base.add_film(1, Film("Inception"))
+    def test_viewer_creation_and_match_index(self):
+        viewer1 = Viewer(self.films[1], self.films[2], self.films[2])
+        viewer2 = Viewer(self.films[2], self.films[3], self.films[4])
+        viewer3 = Viewer(self.films[3], self.films[3])
+        self.assertAlmostEqual(viewer1.get_match_index(viewer2), 1 / 2)
+        self.assertAlmostEqual(viewer2.get_match_index(viewer1), 1 / 3)
+        self.assertAlmostEqual(viewer1.get_match_index(viewer3), 0)
+        self.assertAlmostEqual(viewer3.get_match_index(viewer1), 0)
+        self.assertAlmostEqual(viewer2.get_match_index(viewer3), 1 / 3)
+        self.assertAlmostEqual(viewer3.get_match_index(viewer2), 1)
 
-    def test_get_nonexistent_film(self):
-        with self.assertRaises(KeyError):
-            self.film_base.get_film(99)
+        viewer_empty = Viewer()
+        self.assertAlmostEqual(viewer_empty.get_match_index(viewer1), 1)
+        self.assertAlmostEqual(viewer1.get_match_index(viewer_empty), 0)
 
-    @patch("builtins.open", new_callable=mock_open, read_data="1,Matrix\n2,Inception\n")
-    def test_upload_films_from_file(self, mock_file):
-        self.film_base.upload_films_from_file("dummy.txt")
-        self.assertEqual(self.film_base.get_film(1).name, "Matrix")
-        self.assertEqual(self.film_base.get_film(2).name, "Inception")
+    def test_get_mismatched_films(self):
+        viewer1 = Viewer(self.films[1], self.films[2])
+        viewer2 = Viewer(self.films[2], self.films[3])
+        mismatched = viewer1.get_mismatched_films(viewer2)
+        self.assertEqual(mismatched, {self.films[1]})
 
+    def test_recommendation(self):
+        viewer1 = Viewer(self.films[1], self.films[2])
+        viewer2 = Viewer(self.films[2], self.films[3])
+        viewer3 = Viewer(self.films[3], self.films[4])
+        self.viewers_base.add_viewer(viewer1)
+        self.viewers_base.add_viewer(viewer2)
+        recommended_film = self.viewers_base.recommend(viewer3)
+        self.assertEqual(recommended_film, self.films[2])
 
-class TestViewersBase(unittest.TestCase):
-    def setUp(self):
-        self.film_base = FilmBase()
-        self.film_base.add_film(1, Film("Matrix"))
-        self.film_base.add_film(2, Film("Inception"))
-        self.film_base.add_film(3, Film("Avatar"))
-        self.viewers_base = ViewersBase(self.film_base)
-
-    def test_add_viewer(self):
-        self.viewers_base.add_viewer(1, 2)
-        viewer = self.viewers_base._ViewersBase__viewers_base[0]
-        self.assertEqual(len(viewer._Viewer__watched_films_list), 2)
-        self.assertEqual(viewer._Viewer__watched_films_list[0].name, "Matrix")
-        self.assertEqual(viewer._Viewer__watched_films_list[1].name, "Inception")
-
-    def test_add_watched_films_to_viewer(self):
-        self.viewers_base.add_viewer(1)
-        self.viewers_base.add_watched_films_to_viewer(0, 2, 3)
-        viewer = self.viewers_base._ViewersBase__viewers_base[0]
-        self.assertEqual(len(viewer._Viewer__watched_films_list), 3)
-        self.assertEqual(viewer._Viewer__watched_films_list[0].name, "Matrix")
-        self.assertEqual(viewer._Viewer__watched_films_list[1].name, "Inception")
-        self.assertEqual(viewer._Viewer__watched_films_list[2].name, "Avatar")
-
-    @patch("builtins.open", new_callable=mock_open, read_data="1,2\n2,3\n")
-    def test_upload_views_from_file(self, mock_file):
-        self.viewers_base.upload_views_from_file("dummy.txt")
-        viewer1 = self.viewers_base._ViewersBase__viewers_base[0]
-        self.assertEqual(len(viewer1._Viewer__watched_films_list), 2)
-
-    def test_recommend(self):
-        self.viewers_base.add_viewer(1, 2)  # Viewer 0: Watched "Matrix" and "Inception"
-        self.viewers_base.add_viewer(1, 3)  # Viewer 1: Watched "Matrix" and "Avatar"
-        recommended_film = self.viewers_base.recommend(0)
-        self.assertEqual(recommended_film.name, "Avatar")
-
-    def test_no_recommendations(self):
-        self.viewers_base.add_viewer(1)  # Viewer 0
-        self.viewers_base.add_viewer(1)  # Viewer 1
-        recommended_film = self.viewers_base.recommend(0)
-        self.assertIsNone(recommended_film)
-
-    def test_match_index(self):
-        viewer1 = self.viewers_base._Viewer()
-        viewer2 = self.viewers_base._Viewer()
-        viewer1.add_watched_film(self.film_base.get_film(1))
-        viewer1.add_watched_film(self.film_base.get_film(2))
-        viewer2.add_watched_film(self.film_base.get_film(1))
-        viewer2.add_watched_film(self.film_base.get_film(3))
-        self.assertAlmostEqual(viewer1.get_match_index(viewer2), 0.5)
+    def test_print(self):
+        viewer = Viewer(self.films.__getitem__(1), self.films[3])
+        self.viewers_base.add_viewer(viewer)
+        captured_output = StringIO()
+        sys.stdout = captured_output
+        self.viewers_base.print()
+        sys.stdout = sys.__stdout__
+        self.assertIn("Titanic", captured_output.getvalue())
+        self.assertIn("has been viewed", captured_output.getvalue())
 
 
 if __name__ == "__main__":
