@@ -4,15 +4,20 @@ from typing import Dict, List, Set, Optional
 
 
 class Film:
-    def __init__(self, name: str) -> None:
+    def __init__(self, identify: int, name: str) -> None:
         self.__name: str = name
+        self.__identify: int = identify
 
     @property
     def name(self) -> str:
         return self.__name
 
+    @property
+    def identify(self) -> int:
+        return self.__identify
+
     def __str__(self) -> str:
-        return f'Film "{self.__name}"'
+        return f'Film (ID: {self.__identify}) "{self.__name}"'
 
 
 class FilmBase:
@@ -22,22 +27,25 @@ class FilmBase:
     def __getitem__(self, identifier: int) -> Film:
         return self.__film_base[identifier]
 
-    def add_film(self, identifier: int, film: Film) -> None:
-        if identifier in self.__film_base:
-            raise KeyError(f'Film with ID:{identifier} already exists')
+    def __contains__(self, identify: int):
+        return identify in self.__film_base
 
-        self.__film_base[identifier] = film
+    def add_film(self, film: Film) -> None:
+        if film.identify in self.__film_base:
+            raise KeyError(f'Film with ID:{film.identify} already exists')
+
+        self.__film_base[film.identify] = film
 
     def upload_films_from_file(self, filename: str) -> None:
         with open(filename, encoding='utf-8') as file:
             reader = csv.reader(file)
             for identifier, name in reader:
-                self.add_film(int(identifier), Film(name.strip()))
+                self.add_film(Film(int(identifier), name.strip()))
 
     def print(self):
         print("Available films:")
-        for identifier, film in self.__film_base.items():
-            print(f'ID:{identifier}   {film}')
+        for film in self.__film_base.values():
+            print(film)
 
 
 class Films:
@@ -64,6 +72,10 @@ class Films:
         self.__watched_films_list.append(film)
         self.__watched_films_set.add(film)
 
+    def print(self):
+        for film in self.__watched_films_list:
+            print(film)
+
 
 class Viewer:
     def __init__(self, *films: Film) -> None:
@@ -82,8 +94,7 @@ class Viewer:
 
     def print(self) -> None:
         print("Watched films:")
-        for watched_film in self.watched_films:
-            print(watched_film.name)
+        self.watched_films.print()
 
 
 class ViewersBase:
@@ -97,6 +108,8 @@ class ViewersBase:
 
     def add_viewer(self, viewer: Viewer) -> None:
         for film in viewer.watched_films:
+            if film.identify not in self.__film_base:
+                raise ValueError("Unknown film")
             self.__watch_data[film] = self.__watch_data.get(film, 0) + 1
 
         self.__viewers_base.append(viewer)
@@ -123,8 +136,6 @@ class ViewersBase:
         return most_interesting_film["film"]
 
     def print(self):
-        self.__film_base.print()
-        print()
         print("Watched films data:")
         for film, views in self.__watch_data.items():
             print(f'{film} has been viewed {views} times')
@@ -138,13 +149,15 @@ class ViewersBase:
 if __name__ == '__main__':
     films = FilmBase()
     films.upload_films_from_file('FilmsBase.txt')
+    films.add_film(Film(5, "Matrix"))
     viewers = ViewersBase(films)
     viewers.upload_views_from_file('ViewersBase.txt')
+    viewers.add_viewer(Viewer(films[1], films[2], films[5], films[5]))
 
     viewers.print()
 
-    print("_______________________________________________________")
+    print("==============================================")
     new_viewer = Viewer(films[2], films[4])
     print("New viewer data:")
     new_viewer.print()
-    print(f"{viewers.recommend(new_viewer)} recommended for new viewer")
+    print(f"=> {viewers.recommend(new_viewer)} recommended for new viewer")

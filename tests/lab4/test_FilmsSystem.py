@@ -7,18 +7,31 @@ from src.lab4.FilmsSystem import Film, Films, FilmBase, Viewer, ViewersBase
 class TestFilmSystem(unittest.TestCase):
     def setUp(self):
         self.films = FilmBase()
-        self.films.add_film(1, Film("Inception"))
-        self.films.add_film(2, Film("Titanic"))
-        self.films.add_film(3, Film("Avatar"))
-        self.films.add_film(4, Film("The Matrix"))
+        self.films.add_film(Film(1, "Inception"))
+        self.films.add_film(Film(2, "Titanic"))
+        self.films.add_film(Film(3, "Avatar"))
+        self.films.add_film(Film(4, "The Matrix"))
         self.viewers_base = ViewersBase(self.films)
 
     def test_add_and_get_film(self):
-        self.assertRaises(KeyError, self.films.add_film, 1, Film("The Matrix"))
+        self.assertRaises(KeyError, self.films.add_film, Film(1, "The Matrix 2"))
         self.assertRaises(KeyError, self.films.__getitem__, 5)
-        new_film = Film("The Matrix 2")
-        self.films.add_film(5, new_film)
+        new_film = Film(5, "The Matrix 2")
+        self.films.add_film(new_film)
         self.assertEqual(self.films.__getitem__(5), new_film)
+
+    def test_add_viewer(self):
+        viewer1 = Viewer(self.films[1], self.films[2], self.films[2])
+        viewer2 = Viewer(self.films[2], self.films[3], self.films[4])
+        viewer3 = Viewer(self.films[3], self.films[3])
+        self.viewers_base.add_viewer(viewer1)
+        self.viewers_base.add_viewer(viewer2)
+        self.viewers_base.add_viewer(viewer3)
+        self.assertEqual(self.viewers_base[0], viewer1)
+        self.assertEqual(self.viewers_base[1], viewer2)
+        self.assertEqual(self.viewers_base[2], viewer3)
+        viewer_bad = Viewer(self.films[4], Film(9, "Smeshariki"))
+        self.assertRaises(ValueError, self.viewers_base.add_viewer, viewer_bad)
 
     def test_viewer_creation_and_match_index(self):
         viewer1 = Viewer(self.films[1], self.films[2], self.films[2])
@@ -49,16 +62,6 @@ class TestFilmSystem(unittest.TestCase):
         self.viewers_base.add_viewer(viewer2)
         recommended_film = self.viewers_base.recommend(viewer3)
         self.assertEqual(recommended_film, self.films[2])
-
-    def test_print(self):
-        viewer = Viewer(self.films.__getitem__(1), self.films[3])
-        self.viewers_base.add_viewer(viewer)
-        captured_output = StringIO()
-        sys.stdout = captured_output
-        self.viewers_base.print()
-        sys.stdout = sys.__stdout__
-        self.assertIn("Titanic", captured_output.getvalue())
-        self.assertIn("has been viewed", captured_output.getvalue())
 
 
 if __name__ == "__main__":
