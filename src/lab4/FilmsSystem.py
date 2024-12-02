@@ -152,7 +152,6 @@ if __name__ == '__main__':
     films.add_film(Film(5, "Matrix"))
     viewers = ViewersBase(films)
     viewers.upload_views_from_file('ViewersBase.txt')
-    viewers.add_viewer(Viewer(films[1], films[2], films[5], films[5]))
 
     viewers.print()
 
