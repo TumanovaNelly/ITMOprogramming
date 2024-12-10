@@ -7,6 +7,7 @@ class AcceptableError(Exception):
     """
     Допустимая для работы системы ошибка
     """
+
     def __init__(self, *args):
         if args:
             self.message = args[0]
@@ -151,6 +152,7 @@ class ProductsList:
     Класс, представляющий список товаров заказа.
     :var products: Словарь с товарами и их количеством.
     """
+
     def __init__(self):
         self.products: Dict[str, int] = dict()
 
@@ -169,6 +171,8 @@ class ProductsList:
         Добавляет товар в список.
         :param product: Название товара.
         """
+        product = product.strip()
+        if not product: raise ValueError("Invalid product")
         self.products[product] = self.products.get(product, 0) + 1
 
 
@@ -194,16 +198,20 @@ class Order:
         """
         Сравнивает заказы для сортировки.
 
-        Заказы сравниваются по алфавитному порядку страны или,
+        Заказы сравниваются по алфавитному порядку страны (все кроме России) или,
         если заказы с одной страны, по приоритету
         (страна с более высоким приоритетом меньше).
 
         :param other: Другой заказ для сравнения.
         :return: True, если текущий заказ менее приоритетен, чем другой.
         """
-        return self.priority.priority > other.priority.priority \
-            if self.address.country == other.address.country \
-            else self.address.country < other.address.country
+        if self.address.country == other.address.country:
+            return self.priority.priority > other.priority.priority
+        elif self.address.country == "Россия":
+            return True
+        elif other.address.country == "Россия":
+            return False
+        else: return self.address.country < other.address.country
 
     def __str__(self) -> str:
         """
@@ -222,6 +230,7 @@ class OrdersReader:
     :var exceptions: Список исключений с информацией
         об ошибочных строках.
     """
+
     def __init__(self):
         self.exceptions: List[Tuple[str, int, str]] = []
 
@@ -296,7 +305,7 @@ class OrdersReader:
         :return: Список товаров.
         """
         products = ProductsList()
-        for product in map(str.strip, products_data.split(",")):
+        for product in products_data.split(","):
             products.add(product)
         return products
 
